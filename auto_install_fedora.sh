@@ -7,9 +7,24 @@ install_oh_my_zsh() {
 
 # Create a function to insert the autosuggestion plugin in the .zshrc file
 insert_plugin_in_zshrc() {
+  word_or_string="plugins=(git"
   cd ~/
   file=".zshrc"
-  line_number=73
+
+  line=""
+  line_nb=0
+  max_column=0
+
+  # Read the file line by line
+  while IFS= read -r current_line; do
+    ((line_nb=line_nb+1))
+    if [[ $current_line == *"$word_or_string"* ]]; then
+      line="$current_line"
+      break;
+    fi
+  done < "$filename"
+
+  line_number="$line_nb"
   column_number=12
   string_to_insert="$1"
 
@@ -66,11 +81,9 @@ autosuggestion_install() {
 }
 
 # Here we check if the user already have zsh on his pc, and install it accordingly
-if [[ -n "$(command -v zsh)" ]]; then
-  install_oh_my_zsh
-else
+if ! [[ -n "$(command -v zsh)" ]]; then
   sudo dnf install zsh
-  install_oh_my_zsh
 fi
 
+install_oh_my_zsh
 autosuggestion_install
