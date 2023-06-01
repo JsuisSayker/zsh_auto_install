@@ -7,24 +7,9 @@ install_oh_my_zsh() {
 
 # Create a function to insert the autosuggestion plugin in the .zshrc file
 insert_plugin_in_zshrc() {
-  word_or_string="plugins=(git"
   cd ~/
   file=".zshrc"
-
-  line=""
-  line_nb=0
-  max_column=0
-
-  # Read the file line by line
-  while IFS= read -r current_line; do
-    ((line_nb=line_nb+1))
-    if [[ $current_line == *"$word_or_string"* ]]; then
-      line="$current_line"
-      break;
-    fi
-  done < "$filename"
-
-  line_number="$line_nb"
+  line_number=73
   column_number=12
   string_to_insert="$1"
 
