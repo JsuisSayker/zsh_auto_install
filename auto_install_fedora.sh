@@ -7,8 +7,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 insert_plugin_in_zshrc() {
   cd ~/
   file=".zshrc"
-  line_number=83
-  column_number=13
+  line_number=73
+  column_number=12
   string_to_insert="$1"
 
   # Read the file content into an array
@@ -31,7 +31,7 @@ syntax() {
   [ "$answer" = "yES" ] || [ "$answer" = "Yes" ] || [ "$answer" = "YEs" ] ||
   [ "$answer" = "YeS" ] || [ "$answer" = "YES" ]; then
     cd ~/.oh-my-zsh/custom/plugins
-    git clone git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     insert_plugin_in_zshrc " zsh-syntax-highlighting"
   elif [ "$answer" = "no" ] || [ "$answer" = "No" ] || [ "$answer" = "nO" ] ||
   [ "$answer" = "NO" ] || [ "$answer" = "n" ] || [ "$answer" = "N" ];then
@@ -48,7 +48,7 @@ if [ -z "$answer" ] || [ "$answer" = "y" ] || [ "$answer" = "Y" ] ||
 [ "$answer" = "yES" ] || [ "$answer" = "Yes" ] || [ "$answer" = "YEs" ] ||
 [ "$answer" = "YeS" ] || [ "$answer" = "YES" ]; then
   cd ~/.oh-my-zsh/custom/plugins
-  git clone git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   insert_plugin_in_zshrc " zsh-autosuggestions"
   syntax
 elif [ "$answer" = "no" ] || [ "$answer" = "No" ] || [ "$answer" = "nO" ] ||
