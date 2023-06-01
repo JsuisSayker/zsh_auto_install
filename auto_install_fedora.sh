@@ -68,11 +68,9 @@ autosuggestion_install() {
 # Here we check if the user already have zsh on his pc, and install it accordingly
 if [[ -n "$(command -v zsh)" ]]; then
   install_oh_my_zsh
-  zsh
-  autosuggestion_install
 else
   sudo dnf install zsh
   install_oh_my_zsh
-  zsh
-  autosuggestion_install
 fi
+
+autosuggestion_install
