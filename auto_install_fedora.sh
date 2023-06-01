@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+install_oh_my_zsh() {
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+}
 
 # Create a function to insert the autosuggestion plugin in the .zshrc file
 insert_plugin_in_zshrc() {
@@ -24,7 +26,7 @@ insert_plugin_in_zshrc() {
 }
 
 # Create a function to ask the user if he want to add the highlighting plugin
-syntax() {
+syntax_highlighting() {
   read -p "Would you want to install the syntax highlighting plugin? [Y/n] " answer
   if [ -z "$answer" ] || [ "$answer" = "y" ] || [ "$answer" = "Y" ] ||
   [ "$answer" = "yes" ] || [ "$answer" = "yEs" ] || [ "$answer" = "yeS" ] ||
@@ -38,25 +40,39 @@ syntax() {
     exit 0
   else
     echo
-    syntax
+    syntax_highlighting
   fi
 }
 
-read -p "Would you want to install the autosuggestion plugin? [Y/n] " answer
-if [ -z "$answer" ] || [ "$answer" = "y" ] || [ "$answer" = "Y" ] ||
-[ "$answer" = "yes" ] || [ "$answer" = "yEs" ] || [ "$answer" = "yeS" ] ||
-[ "$answer" = "yES" ] || [ "$answer" = "Yes" ] || [ "$answer" = "YEs" ] ||
-[ "$answer" = "YeS" ] || [ "$answer" = "YES" ]; then
-  cd ~/.oh-my-zsh/custom/plugins
-  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-  insert_plugin_in_zshrc " zsh-autosuggestions"
-  syntax
-elif [ "$answer" = "no" ] || [ "$answer" = "No" ] || [ "$answer" = "nO" ] ||
-[ "$answer" = "NO" ] || [ "$answer" = "n" ] || [ "$answer" = "N" ];then
-  echo
-  syntax
-else
-  echo
-  ./auto_install.sh
-fi
+# Create a function to ask the user if he want to add the autosuggestion plugin
+autosuggestion_install() {
+  read -p "Would you want to install the autosuggestion plugin? [Y/n] " answer
+  if [ -z "$answer" ] || [ "$answer" = "y" ] || [ "$answer" = "Y" ] ||
+  [ "$answer" = "yes" ] || [ "$answer" = "yEs" ] || [ "$answer" = "yeS" ] ||
+  [ "$answer" = "yES" ] || [ "$answer" = "Yes" ] || [ "$answer" = "YEs" ] ||
+  [ "$answer" = "YeS" ] || [ "$answer" = "YES" ]; then
+    cd ~/.oh-my-zsh/custom/plugins
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    insert_plugin_in_zshrc " zsh-autosuggestions"
+    syntax_highlighting
+  elif [ "$answer" = "no" ] || [ "$answer" = "No" ] || [ "$answer" = "nO" ] ||
+  [ "$answer" = "NO" ] || [ "$answer" = "n" ] || [ "$answer" = "N" ]; then
+    echo
+    syntax_highlighting
+  else
+    echo
+    autosuggestion_install
+  fi
+}
 
+# Here we check if the user already have zsh on his pc, and install it accordingly
+if [[ -n "$(command -v zsh)" ]]; then
+  install_oh_my_zsh
+  zsh
+  autosuggestion_install
+else
+  sudo dnf install zsh
+  install_oh_my_zsh
+  zsh
+  autosuggestion_install
+fi
