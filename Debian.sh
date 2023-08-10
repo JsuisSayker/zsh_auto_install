@@ -111,3 +111,10 @@ echo "Shitch the default shell to ZSH shell"
 echo "-------------------------------------"
 echo
 chsh -s /bin/zsh
+
+echo
+echo "-------------------------------------"
+echo "auto configure powerlevel10k"
+echo "-------------------------------------"
+echo
+zsh < yynnny3121222311111y1yy
