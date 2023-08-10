@@ -15,6 +15,13 @@ echo
 zsh < 1
 
 echo
+echo "-----------"
+echo "Install curl"
+echo "-----------"
+echo
+sudo apt install curl -y
+
+echo
 echo "-----------------"
 echo "Install oh-my-zsh"
 echo "-----------------"
